@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+
+<!-- main section -->
+<div class="row mt-5">
+    <!-- customer and product details -->
+    <div class="col-md-9">
+        <h5 class="bg-secondary text-black p-4">Customer Details</h5>
+        {% for x in data %}
+        {% if forloop.counter == 1 %}
+        <p><b>Name:</b>&nbsp;&nbsp;&nbsp;{{x.uid.username}}</p>
+        <p><b>Email:</b>&nbsp;&nbsp;&nbsp;{{x.uid.email}}</p>
+        {% endif %}
+        {% endfor %}
+
+        
+        <div class="row mt-4">
+            {% for x in data %}
+            <div class="col-md-4">
+                <img src="{{x.fid.fimage.url}}" width="100%" height="200px"> <!-- Assuming you have image field -->
+            </div>
+            <div class="col-md-8">
+                <b><p>Food item:</b>&nbsp;&nbsp;&nbsp;{{x.fid.name}}</p>
+                <b><p>Description:</b>&nbsp;&nbsp;&nbsp;{{x.fid.fdetails}}</p>
+                <b><p>Price:</b>&nbsp;&nbsp;&nbsp; Rs: {{x.fid.price}}</p>
+                <b><p>Category:</b>&nbsp;&nbsp;&nbsp;{{x.fid.cat}}</p>
+                <p>
+                    <b>Quantity:</b>
+                    
+            
+                        <a href="/updateqty/0/{{x.id}}"><button  class="btn btn-danger" style="width:50px" >-</button></a>
+                        <input type="number" value="{{x.qty}}"  style="width: 70px; text-align: center;">
+                        <a href="/updateqty/1/{{x.id}}"><button  class="btn btn-success" style="width:50px">+</button></a>
+                        <a href="/remove/{{x.id}}"><button class="btn btn-info" style="margin-left:14px;">Remove</button></a>
+                </p>
+                
+                
+            </div>
+            {% endfor %}
+    </div>
+</div>
+
+<!-- total amount section -->
+<div class="col-md-3">
+    <h5 class="bg-secondary text-black p-4">Order Summary</h5>
+    <p><b>Total ({{items}}):</b>&nbsp;&nbsp;&nbsp;{{total}}</p>
+    <p><b>Overall Amount:</b>&nbsp;&nbsp;&nbsp; Rs: {{total}}</p>
+    <a href="/confirmorder"><button class="btn btn-warning btn-block mt-3">Confirm Order</button></a>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock 'main' %}

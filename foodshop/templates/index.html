@@ -1,0 +1,207 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+ 
+    .filter-section {
+      width: 250px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      background-color: #9fc8ee;
+      margin-top:7px;
+    }
+
+
+    h4 {
+      margin-bottom: 10px;
+      margin-top:5px;
+    }
+
+
+    /* Category Links */
+    .filter-category a {
+      display: block;
+      text-decoration: none;
+      margin: 8px 0;
+      color: #ff0000;
+    }
+  
+
+    .filter-category a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .sort-price a:hover{
+      color: #0056b3;
+      text-decoration: underline;
+      
+    }
+    .sort-price a {
+      display: block;
+      text-decoration: none;
+      margin: 8px 0;
+      color: #f02525;
+      
+    }
+   
+    .filter-price input[type="number"] {
+      width: 100px;
+      margin-right: 5px;
+      padding: 5px;
+    }
+
+
+    .mb-3 {
+      display: flex;
+      align-items: center;
+      display:block;
+      margin:3px;
+      width:100px;
+    }
+
+
+    .sort-price select {
+      width:200px;
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+
+    button:hover {
+      background-color: #218838;
+    }
+    .btn.btn-primary {
+    width: 100%;
+    }
+    @media (min-width: 768px) {
+    .btn.btn-primary {
+        width: 200px; /* Set a specific width for larger screens */
+    }
+}
+    
+  </style>
+</head>
+<body>
+<!--Carousel-->
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/slide 1.jpg' %}" class="d-block " alt="..."height="500px" width="100%">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/slide 2.webp' %}" class="d-block " alt="..."height="500px" width="100%">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/slide 3.webp' %}" class="d-block " alt="..."height="500px" width="100%">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="row mt-3">
+<div class="col-md-4 bg-light">
+<div class="filter-section">
+  <!-- Filter by Category (links to category pages) -->
+  <div class="filter-category">
+    <h4>Categories</h4>
+    <a href="/catfilter/1">Biryani</a>
+    <a href="/catfilter/2">Pizza</a>
+    <a href="/catfilter/3">Burger</a>
+    <a href="/catfilter/4">Desserts</a>
+    <a href="/catfilter/5">South Indian</a>
+  </div>
+
+
+  <!-- Filter by Price Range (input fields for custom price range) -->
+  <form action="/range">
+    <h4>Price Range</h4>
+    <div class="mb-3">
+      <label for="min">Min:</label>
+      <input type="number"  name="min" placeholder="Enter min value" >
+    <div class="price-input">
+      <label for="max">Max:</label>
+      <input type="number"  name="max" placeholder="Enter max value">
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </div>
+  </form>
+ 
+
+
+  <!-- Sort by Price -->
+  <form class="sort-price">
+    <h4>Sort By Price</h4>
+    <div class="mb-3">
+      <a href="/sort/0" value="asc">Low to High</a>
+    </div>
+    <div>
+      <a href="/sort/1" value="desc">High to Low</a>
+    </div>
+    
+  </form>
+
+
+  <!-- Apply Filters Button -->
+   <div class="md-3">
+  <button type="submit">Apply Filters</button>
+</div>
+</div>
+</div>
+
+<!--main section-->
+<div class="col-md-8">
+  <h1 style="color:purple">Fooditems</h1>
+    <div class="row">
+      <!--card 1-->
+      {% for x in fooditems %}
+      <div class="col-md-4">
+        <div class="card" style="width:100%; margin-bottom: 5px;">
+          <img src="{{x.fimage.url}}" class="card-img-top" alt="..." height="250px">
+          <div class="card-body">
+            <h5 class="card-title">{{x.name}}</h5>
+            <b><p class="card-text-mb-3">Rs: {{x.price}}</p> </b>
+            <a href="/fdetails/{{x.id}}" class="btn btn-primary">More details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+{% endblock 'main' %}
+
+

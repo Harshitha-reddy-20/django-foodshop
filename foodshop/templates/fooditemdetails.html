@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'main' %}
+
+
+<div class="container">
+    {% for x in fooditems %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{x.fimage.url}}"  alt="" class="img-fluid" width="450px" height="250px">
+        </div>
+        <div class="col-md-6">
+            <b><p>Food item:</b>&nbsp;&nbsp;&nbsp;{{x.name}}</p>
+            <b><p>Description:</b>&nbsp;&nbsp;&nbsp;{{x.fdetails}}</p>
+            <b><p>Price:</b>&nbsp;&nbsp;&nbsp;{{x.price}}</p>
+            <P class="mb-3"><b>Category:</b>
+                 {% if x.cat == 1 %}
+                 Biryani
+                 {% elif x.cat == 2 %}
+                 Pizza
+                 {% elif x.cat == 3 %}
+                 Burger
+                 {% elif x.cat == 4 %}
+                 Desserts
+                 {% else %}
+                 South Indian
+                 {% endif %}
+            </P>
+            
+            <!-- Add to Cart Button (if needed) -->
+            <form method="POST" action="#">
+                {% csrf_token %}
+                <a  href="/addtocart/{{x.id}}" class="btn btn-primary">Add to Cart</a>
+                <a href="/yourcart" class="btn btn-primary">Your Cart</a>
+                <a href="/index" class="btn btn-primary">More items</a>
+            </form>
+            {% if success %}
+            <div class="alert alert-success mt-3">
+               {{success}}
+             </div>
+            {% endif %}
+            {% if errmsg %}
+                <div class="alert alert-danger mt-3">
+                    {{errmsg}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+   
+    {% endfor %}
+</div>
+
+
+
+{% endblock 'main' %}
